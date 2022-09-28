@@ -15,5 +15,5 @@ public class LincolnService {
             }
             current.setNext(station);
         }
-    }
-}
+    } // method addStation
+} // class LincolnService

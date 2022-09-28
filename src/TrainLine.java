@@ -30,5 +30,5 @@ public class TrainLine {
             current = current.getNext();
         }
         return found;
-    }
-}
+    } // method lineHasStation
+} // class TrainLine
