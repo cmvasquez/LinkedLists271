@@ -31,4 +31,36 @@ public class TrainLine {
         }
         return found;
     } // method lineHasStation
+
+    public void insertBefore(string beforeName, String newName){
+
+    }
+
+    public void insertAfter(String afterName, String newName){
+
+    }
+
+
+    public void delete(String name) {
+        if (this.head.getName().equals(name)) {
+            // Deleting the head
+            TrainStation oldHeadPointsTo = this.head.getNext();
+            this.head.setNext(null);
+            this.head = oldHeadPointsTo;
+        } else {
+            // Traverse line and find station prior to one to be deleted
+            TrainStation previous = this.head;
+            while ( (!previous.getNext().getName().equals(name)) && previous.hasNext() ) {
+                previous = previous.getNext();
+            }
+            // The while loop ends if previous does not have next or if it does not have a name
+            previous.setNext(previous.getNext().getNext());
+            //               -----------------
+            //               station to delete
+            //               ----------------------------
+            //                      station after station
+            //                       to delete
+        }
+    } // method delete
+
 } // class TrainLine
