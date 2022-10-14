@@ -2,12 +2,7 @@
  * A train line to demonstrate the concept of a simple linked list.
  */
 
-/*
- * Changes by Max Simmer
- * Within the delete method I added an if statement to check if the trainLine is null
- * Created a deleteDelete method which deletes the given station name and the station after it
- * deleteDelete checks if it is the first station, or last station
- */
+
 
 public class TrainLine {
 
