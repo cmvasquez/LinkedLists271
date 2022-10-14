@@ -2,6 +2,13 @@
  * A train line to demonstrate the concept of a simple linked list.
  */
 
+/*
+ * Changes by Max Simmer
+ * Within the delete method I added an if statement to check if the trainLine is null
+ * Created a deleteDelete method which deletes the given station name and the station after it
+ * deleteDelete checks if it is the first station, or last station
+ */
+
 public class TrainLine {
 
     /** The only field of this class!!!!!! */
@@ -118,15 +125,16 @@ public class TrainLine {
         current.setNext(newStation);
     }  // method insertAfter
 
-
     /**
      * Deletes a station specified by name.
      *
      * @param name String with name of station to delete.
      */
     public void delete(String name) {
-        if (this.head == null){
-            System.out.println("The station you entered does not exist!");
+        // if head is null (if name entered does not exist), then print error message
+        if (this.head != null){
+            System.out.printf("The station \"%s\" does not exist!\n", name);
+            // if this.head != null, then continue deleting process
         } else {
             if (this.head.getName().equals(name)) {
                 // Remember what's after the head; we'll need it.
@@ -138,32 +146,32 @@ public class TrainLine {
             } else {
                 // Traverse line and fine station prior to one to be deleted
                 TrainStation prior = this.head;
-            /*
-            Traverse the list with a cursor called "previous" to signify that
-            we are looking for the station prior to the one we wish to delete.
-            Assume that d is the station to delete. Then
-               d = previous.next
-            To remove d, we need to connect the station before d (that would be
-            the previous station) to the station after d (that would be d.next).
-            Therefore, we want the assignment:
-               previous.next = d.next
-            Replacing d with previous.next above, we get
-               previous.next = previous.next.next
-            Or, using the get/set methods for the TrainStation object:
-               previous.setNext(previous.getNext().getNext())
-             */
+                /*
+                Traverse the list with a cursor called "previous" to signify that
+                we are looking for the station prior to the one we wish to delete.
+                Assume that d is the station to delete. Then
+                   d = previous.next
+                To remove d, we need to connect the station before d (that would be
+                the previous station) to the station after d (that would be d.next).
+                Therefore, we want the assignment:
+                   previous.next = d.next
+                Replacing d with previous.next above, we get
+                   previous.next = previous.next.next
+                Or, using the get/set methods for the TrainStation object:
+                   previous.setNext(previous.getNext().getNext())
+                 */
                 while (prior.hasNext() && (!prior.getNext().getName().equals(name))) {
                     prior = prior.getNext();
                 }
-            /*
-            Loop ends when it cannot find a station whose next station is the one
-            to delete, or when it finds that station. We don't know which of the
-            two conditions terminated the loop. The if statement below finds out.
-            If the while loop delivers us to the last station, then there is no
-            station to delete. Because to delete a station, the loop must deliver
-            us to the station prior. The last station, by definition, is not prior
-            to any station.
-             */
+                /*
+                Loop ends when it cannot find a station whose next station is the one
+                to delete, or when it finds that station. We don't know which of the
+                two conditions terminated the loop. The if statement below finds out.
+                If the while loop delivers us to the last station, then there is no
+                station to delete. Because to delete a station, the loop must deliver
+                us to the station prior. The last station, by definition, is not prior
+                to any station.
+                 */
                 if (prior.hasNext()) {
                     // Pointer prior has a non null next, so it is not the last station.
                     // Deletion can proceed.
@@ -173,6 +181,56 @@ public class TrainLine {
         }
     }  // method delete
 
+    /**
+     * Deletes a station based on a given name AND deletes the station after 
+     *
+     * @param String name 
+     */
+    public void deleteDelete(String name){
+        if (this.head != null) {
+            System.out.printf("The station \"%s\" does not exist!\n", name);
+            // if x does exist then delete it
+        } else {
+            if (this.head.getName().equals(name)) {
+                // Remember what's after the head; we'll need it.
+                // if it is the first station, point the old head to the node after its current
+                TrainStation oldHeadPointedTo = this.head.getNext().getNext();
+                // Make the current head point to nowhere.
+                this.head.setNext(null);
+                // Re-designate the head to the station after the old head.
+                this.head = oldHeadPointedTo;
+            } else {
+                // Traverse line and fine station prior to one to be deleted
+                TrainStation prior = this.head;
+
+                while (prior.hasNext() && (!prior.getNext().getName().equals(name))) {
+                    prior = prior.getNext();
+                }
+
+                // new variable named priorNodeNext that is equal to the prior node's next
+                TrainStation priorNodeNext = prior.getNext();
+
+                // replace prior with priorNodeNext
+                if (priorNodeNext.hasNext()) {
+                    // Pointer prior != null next, so it is not the last station, continue deleting
+                    // replace prior with priorNodeNext and get its next node (the second one)
+                    prior.setNext(priorNodeNext.getNext().getNext());
+                } else if (!priorNodeNext.hasNext()){ // if it does not have a next node
+                    // else, the station does not have a next (the last station), then print there is no second station to delete
+                    // we still want to delete Damen I assume
+                    prior.setNext(priorNodeNext.getNext());
+                    System.out.println("There is no station to delete after Damen!");
+                }
+            }
+        }
+    }
+
+
+    /**
+     * String representation of the TrainLine.
+     *
+     * @return String with stations neatly arranged
+     */
     public String toString() {
         // Introducing the use of StringBuilder objects
         StringBuilder sb = new StringBuilder();

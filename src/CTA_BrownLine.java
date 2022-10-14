@@ -12,7 +12,7 @@ public class CTA_BrownLine {
 
         System.out.println(brownLine);
 
-        brownLine.delete("Francisco");
+        brownLine.deleteDelete("Null");
 
         System.out.println(brownLine.toString());
 
